@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--&lt;!&ndash;    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css} " />&ndash;&gt;-->
+<!--    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css} " />-->
+    <!-- Example Bootstrap CSS Inclusion -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+
+</head>
+
+<body>
+<div class="container">
+
+    <h1 th:text=${message} > </h1>
+    <hr/>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Modified At</th>
+            <th>Is Complete</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "item : ${todolistall}" >
+            <td th:text=${item.id} ></td>
+            <td th:text=${item.name} ></td>
+            <td th:text=${item.description} ></td>
+            <td th:text=${item.createdAt} ></td>
+            <td th:text=${item.updatedAt} ></td>
+<!--            <td th:text=${item.isCompleted} ></td>-->
+            <td>
+                <!-- Conditionally render the checkbox based on the isCompleted value -->
+                <input type="checkbox" th:checked="${item.isCompleted}" th:if="${item.isCompleted}" disabled="disabled" />
+                <input type="checkbox" th:if="${not item.isCompleted}" disabled="disabled" />
+            </td>
+            <td>
+                <div class="btn btn-group-sm" role="group">
+                    <a class="btn btn-info" th:href="@{/edit/{id}(id=${item.id})}">
+                        <i class="bi bi-pencil-fill"></i> Edit</a>
+                    <a class="btn btn-danger" th:href="@{/delete/{id}(id=${item.id})}">
+                        <i class="bi bi-trash-fill"></i> Delete</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p>
+
+        <!--  ******WON'T WORK****** -->
+        <!--<button th:onClick="@{/add}" type="submit" class="btn btn-primary">Add New Task</button>-->
+        <!--******TO MAKE THE ABOVE WORK, INCLUDE JAVASCRIPT CODE THAT SETS WINDOW.LOCATION.HREF TO THE DESIRED URL*****-->
+        <!--<button th:onClick="window.location.href='/add'" type="button" class="btn btn-primary">Add New Task</button>-->
+
+        <!--  Another way, using anchor tag, i.e link instead of button -->
+        <a th:href="@{/add}" class="btn btn-primary">Add New Task</a>
+
+    </p>
+</div>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css} "></script>
+</body>
+</html>
